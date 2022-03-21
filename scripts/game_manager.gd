@@ -11,8 +11,10 @@ var sun: DirectionalLight
 var time: float
 var time_speed := 60.0
 var lighting_update_threshold := 0.1
+var weather: int
 
 var _last_lighting_update := 0.0
+var _weathers: Array
 
 enum GameState {
 	STARTUP,
@@ -24,6 +26,7 @@ enum GameState {
 func _ready() -> void:
 	state = GameState.STARTUP
 	yield(choose_game_path(), "completed")
+	_load_timecyc()
 	emit_signal("initialized")
 	print("Load main menu")
 	var err := get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")
@@ -56,6 +59,45 @@ func _update_lighting() -> void:
 	sun.rotation_degrees = sun_rotation
 	world_env.environment.background_sky.sun_latitude = latitude
 	world_env.environment.background_sky.sun_longitude = longitude
+
+
+func _load_timecyc() -> void:
+	print("Load timecyc")
+	var file = File.new()
+	var err = file.open(game_path + "/data/timecyc.dat", File.READ)
+	assert(err == OK)
+
+	for wi in 4:
+		var wdata := Weather.new()
+		for li in 24:
+			li = li as float
+			var line := file.get_line() as String
+			while line.begins_with("//"):
+				line = file.get_line() as String
+			var parts := line.replacen("\t", " ").rsplit(" ", false)
+
+			wdata.amb.add_point(li, Color(float(parts[0]) / 255, float(parts[1]) / 255, float(parts[2]) / 255))
+			wdata.dir.add_point(li, Color(float(parts[3]) / 255, float(parts[4]) / 255, float(parts[5]) / 255))
+			wdata.sky_top.add_point(li, Color(float(parts[6]) / 255, float(parts[7]) / 255, float(parts[8]) / 255))
+			wdata.sky_bottom.add_point(li, Color(float(parts[9]) / 255, float(parts[10]) / 255, float(parts[11]) / 255))
+			wdata.suncore.add_point(li, Color(float(parts[12]) / 255, float(parts[13]) / 255, float(parts[14]) / 255))
+			wdata.suncorona.add_point(li, Color(float(parts[15]) / 255, float(parts[16]) / 255, float(parts[17]) / 255))
+
+			wdata.sunsz.add_point(Vector2(li, float(parts[18])))
+			wdata.sprsz.add_point(Vector2(li, float(parts[19])))
+			wdata.sprbght.add_point(Vector2(li, float(parts[20])))
+			wdata.shdw.add_point(Vector2(li, float(parts[21])))
+			wdata.lightshd.add_point(Vector2(li, float(parts[22])))
+			wdata.treeshd.add_point(Vector2(li, float(parts[23])))
+			wdata.farclp.add_point(Vector2(li, float(parts[24])))
+			wdata.fogst.add_point(Vector2(li, float(parts[25])))
+			wdata.lightonground.add_point(Vector2(li, float(parts[26])))
+
+			wdata.lowcloudsrgb.add_point(li, Color(float(parts[27]) / 255, float(parts[28]) / 255, float(parts[29]) / 255))
+			wdata.topcloudrgb.add_point(li, Color(float(parts[30]) / 255, float(parts[31]) / 255, float(parts[32]) / 255))
+			wdata.bottomcloudrgb.add_point(li, Color(float(parts[33]) / 255, float(parts[34]) / 255, float(parts[35]) / 255))
+		_weathers.append(wdata)
+	print("Loaded timecyc")
 
 
 func start_game() -> void:
@@ -92,21 +134,21 @@ func choose_game_path() -> void:
 
 
 class Weather:
-	var amb: Gradient
-	var dir: Gradient
-	var sky_top: Gradient
-	var sky_bottom: Gradient
-	var suncore: Gradient
-	var suncorona: Gradient
-	var sunsz: Curve
-	var sprsz: Curve
-	var sprbght: Curve
-	var shdw: Curve
-	var lightshd: Curve
-	var treeshd: Curve
-	var farclp: Curve
-	var fogst: Curve
-	var lightonground: Curve
-	var lowcloudsrgb: Gradient
-	var topcloudrgb: Gradient
-	var bottomcloudrgb: Gradient
+	var amb := Gradient.new()
+	var dir := Gradient.new()
+	var sky_top := Gradient.new()
+	var sky_bottom := Gradient.new()
+	var suncore := Gradient.new()
+	var suncorona := Gradient.new()
+	var sunsz := Curve.new()
+	var sprsz := Curve.new()
+	var sprbght := Curve.new()
+	var shdw := Curve.new()
+	var lightshd := Curve.new()
+	var treeshd := Curve.new()
+	var farclp := Curve.new()
+	var fogst := Curve.new()
+	var lightonground := Curve.new()
+	var lowcloudsrgb := Gradient.new()
+	var topcloudrgb := Gradient.new()
+	var bottomcloudrgb := Gradient.new()
