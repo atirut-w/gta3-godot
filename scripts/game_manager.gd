@@ -30,6 +30,7 @@ func _ready() -> void:
 
 
 func start_game() -> void:
+	print("Start game")
 	world_env = WorldEnvironment.new()
 	world_env.environment = Environment.new()
 	world_env.environment.background_mode = Environment.BG_SKY
@@ -40,7 +41,7 @@ func start_game() -> void:
 	sun.shadow_enabled = true
 	add_child(sun)
 
-	time = 0.0
+	time = 7 * 60 * 60
 	state = GameState.IN_GAME
 
 
