@@ -36,11 +36,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	match state:
 		GameState.IN_GAME:
-			print("The time is %d:%d:%d" % [
-				(time / 60 / 60) as int % 24,
-				(time / 60) as int % 60,
-				(time) as int % 60,
-			])
+			# print("The time is %d:%d:%d" % [
+			# 	(time / 60 / 60) as int % 24,
+			# 	(time / 60) as int % 60,
+			# 	(time) as int % 60,
+			# ])
 			time += delta * time_speed
 			if time > 86400.0:
 				time = 0.0
