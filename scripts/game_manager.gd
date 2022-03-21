@@ -60,6 +60,13 @@ func _update_lighting() -> void:
 	world_env.environment.background_sky.sun_latitude = latitude
 	world_env.environment.background_sky.sun_longitude = longitude
 
+	var wdata := _weathers[weather] as Weather
+	var topcol := wdata.sky_top.interpolate(time / 3600.0)
+	var bottomcol := wdata.sky_bottom.interpolate(time / 3600.0)
+	world_env.environment.background_sky.sky_top_color = topcol
+	world_env.environment.background_sky.sky_horizon_color = topcol.linear_interpolate(bottomcol, 0.5)
+	world_env.environment.background_sky.ground_horizon_color = bottomcol.linear_interpolate(topcol, 0.5)
+	world_env.environment.background_sky.ground_bottom_color = bottomcol
 
 func _load_timecyc() -> void:
 	print("Load timecyc")
