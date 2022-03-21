@@ -1,10 +1,26 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/mainmenu/mainmenu.gd" type="Script" id=1]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
 text = "Main menu"
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Button" type="Button" parent="CenterContainer"]
+margin_left = 462.0
+margin_top = 290.0
+margin_right = 562.0
+margin_bottom = 310.0
+text = "Open a scene"
+
+[connection signal="pressed" from="CenterContainer/Button" to="." method="_on_Button_pressed"]
