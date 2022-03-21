@@ -31,6 +31,7 @@ func _ready() -> void:
 
 func start_game() -> void:
 	world_env = WorldEnvironment.new()
+	world_env.environment = Environment.new()
 	world_env.environment.background_mode = Environment.BG_SKY
 	world_env.environment.background_sky = ProceduralSky.new()
 	add_child(world_env)
