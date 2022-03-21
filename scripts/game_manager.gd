@@ -49,7 +49,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_lighting() -> void:
-	pass
+	print("Update lighting")
+	sun.rotation_degrees = Vector3((time / 86400.0) * 360.0 + 90, -90.0, 0.0)
 
 
 func start_game() -> void:
