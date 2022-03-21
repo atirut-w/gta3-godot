@@ -63,7 +63,7 @@ func _update_lighting() -> void:
 	var wdata := _weathers[weather] as Weather
 
 	var topcol := wdata.sky_top.interpolate(time / 3600.0)
-	var suncol := wdata.suncore.interpolate(time / 3600.0).linear_interpolate(topcol, 0.5)
+	var suncol := wdata.suncore.interpolate(time / 3600.0) + topcol
 	var bottomcol := wdata.sky_bottom.interpolate(time / 3600.0)
 	world_env.environment.background_sky.sun_color = suncol
 	world_env.environment.fog_sun_color = suncol
