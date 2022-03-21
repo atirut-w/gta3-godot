@@ -27,6 +27,7 @@ func _ready() -> void:
 
 
 func load_sfx(id: int) -> AudioStreamSample:
+	print("Loading SFX %d" % id)
 	var file := File.new()
 	
 	var err := file.open(GameManager.game_path + "/audio/sfx.RAW", File.READ)
