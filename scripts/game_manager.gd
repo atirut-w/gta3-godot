@@ -63,7 +63,11 @@ func _update_lighting() -> void:
 	var wdata := _weathers[weather] as Weather
 
 	var topcol := wdata.sky_top.interpolate(time / 3600.0)
+	var suncol := wdata.suncore.interpolate(time / 3600.0).linear_interpolate(topcol, 0.5)
 	var bottomcol := wdata.sky_bottom.interpolate(time / 3600.0)
+	world_env.environment.background_sky.sun_color = suncol
+	world_env.environment.fog_sun_color = suncol
+	sun.light_color = suncol
 	world_env.environment.background_sky.sky_top_color = topcol
 	world_env.environment.background_sky.sky_horizon_color = topcol.linear_interpolate(bottomcol, 0.5)
 	world_env.environment.background_sky.ground_horizon_color = bottomcol.linear_interpolate(topcol, 0.5)
@@ -92,6 +96,7 @@ func _load_timecyc() -> void:
 			wdata.amb.add_point(li, Color(float(parts[0]) / 255, float(parts[1]) / 255, float(parts[2]) / 255))
 			wdata.sky_top.add_point(li, Color(float(parts[6]) / 255, float(parts[7]) / 255, float(parts[8]) / 255))
 			wdata.sky_bottom.add_point(li, Color(float(parts[9]) / 255, float(parts[10]) / 255, float(parts[11]) / 255))
+			wdata.suncore.add_point(li, Color(float(parts[12]) / 255, float(parts[13]) / 255, float(parts[14]) / 255))
 
 			wdata.farclp.add_point(Vector2(li, float(parts[24])))
 			wdata.fogst.add_point(Vector2(li, float(parts[25])))
