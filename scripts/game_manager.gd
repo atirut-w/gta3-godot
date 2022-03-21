@@ -6,6 +6,13 @@ signal initialized()
 var game_path := ""
 var state: int
 
+var world_env: WorldEnvironment
+var sun: DirectionalLight
+var time: float
+var lighting_update_threshold := 1.0
+
+var _last_lighting_update := 0.0
+
 enum GameState {
 	STARTUP,
 	MAIN_MENU,
@@ -20,6 +27,20 @@ func _ready() -> void:
 	print("Load main menu")
 	var err := get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")
 	assert(err == OK)
+
+
+func start_game() -> void:
+	world_env = WorldEnvironment.new()
+	world_env.environment.background_mode = Environment.BG_SKY
+	world_env.environment.background_sky = ProceduralSky.new()
+	add_child(world_env)
+
+	sun = DirectionalLight.new()
+	sun.shadow_enabled = true
+	add_child(sun)
+
+	time = 0.0
+	state = GameState.IN_GAME
 
 
 # Promp the user for the game path
