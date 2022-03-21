@@ -68,7 +68,6 @@ func _update_lighting() -> void:
 	world_env.environment.background_sky.sky_horizon_color = topcol.linear_interpolate(bottomcol, 0.5)
 	world_env.environment.background_sky.ground_horizon_color = bottomcol.linear_interpolate(topcol, 0.5)
 	world_env.environment.background_sky.ground_bottom_color = bottomcol
-
 	world_env.environment.ambient_light_color = wdata.amb.interpolate(time / 3600.0)
 
 func _load_timecyc() -> void:
@@ -86,7 +85,6 @@ func _load_timecyc() -> void:
 			var parts := line.replacen("\t", " ").rsplit(" ", false)
 
 			wdata.amb.add_point(li, Color(float(parts[0]) / 255, float(parts[1]) / 255, float(parts[2]) / 255))
-
 			wdata.sky_top.add_point(li, Color(float(parts[6]) / 255, float(parts[7]) / 255, float(parts[8]) / 255))
 			wdata.sky_bottom.add_point(li, Color(float(parts[9]) / 255, float(parts[10]) / 255, float(parts[11]) / 255))
 		# Godot devs, please remove the two default points from gradients.
