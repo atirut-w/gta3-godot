@@ -50,6 +50,7 @@ func load_sfx(id: int) -> AudioStreamSample:
 		AudioStreamSample.LOOP_FORWARD if meta.loop_end != 0
 		else AudioStreamSample.LOOP_DISABLED
 	)
+	stream.mix_rate = meta.sample_rate
 
 	return stream
 
