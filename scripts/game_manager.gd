@@ -42,6 +42,15 @@ func _physics_process(delta: float) -> void:
 			if time > 86400.0:
 				time = 0.0
 
+			_last_lighting_update += delta
+			if _last_lighting_update > lighting_update_threshold:
+				_last_lighting_update = 0.0
+				_update_lighting()
+
+
+func _update_lighting() -> void:
+	pass
+
 
 func start_game() -> void:
 	print("Start game")
