@@ -9,7 +9,7 @@ var state: int
 var world_env: WorldEnvironment
 var sun: DirectionalLight
 var time: float
-var time_speed := 60 * 60
+var time_speed := 60
 var lighting_update_threshold := 1.0
 
 var _last_lighting_update := 0.0
@@ -28,6 +28,19 @@ func _ready() -> void:
 	print("Load main menu")
 	var err := get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")
 	assert(err == OK)
+
+
+func _physics_process(delta: float) -> void:
+	match state:
+		GameState.IN_GAME:
+			print("The time is %d:%d:%d" % [
+				(time / 60 / 60) as int % 24,
+				(time / 60) as int % 60,
+				(time) as int % 60,
+			])
+			time += delta * time_speed
+			if time > 86400.0:
+				time = 0.0
 
 
 func start_game() -> void:
