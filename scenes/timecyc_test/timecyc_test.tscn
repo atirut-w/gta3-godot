@@ -14,3 +14,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 150.219, 21.6463, -153.967 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.387113, -0.074363, -0.919029, 0, 0.996742, -0.0806512, 0.922032, 0.0312212, 0.385852, 146.108, 22.184, -150.972 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer"]
+margin_right = 74.0
+margin_bottom = 24.0
+max_value = 3.0
+
+[connection signal="value_changed" from="CanvasLayer/SpinBox" to="." method="_on_SpinBox_value_changed"]
