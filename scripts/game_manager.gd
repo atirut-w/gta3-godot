@@ -7,18 +7,19 @@ var game_path := ""
 var state: int
 
 enum GameState {
+	STARTUP,
 	MAIN_MENU,
 	GAME,
 }
 
 
 func _ready() -> void:
+	state = GameState.STARTUP
 	yield(choose_game_path(), "completed")
 	emit_signal("initialized")
 	print("Load main menu")
 	var err := get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")
 	assert(err == OK)
-	state = GameState.MAIN_MENU
 
 
 # Promp the user for the game path
