@@ -56,7 +56,7 @@ func _update_lighting() -> void:
 func start_game() -> void:
 	print("Start game")
 	world_env = WorldEnvironment.new()
-	world_env.environment = Environment.new()
+	world_env.environment = load(ProjectSettings["rendering/environment/default_environment"])
 	world_env.environment.background_mode = Environment.BG_SKY
 	world_env.environment.background_sky = ProceduralSky.new()
 	add_child(world_env)
