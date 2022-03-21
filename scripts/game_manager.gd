@@ -9,7 +9,7 @@ var state: int
 var world_env: WorldEnvironment
 var sun: DirectionalLight
 var time: float
-var time_speed := 60.0
+var time_speed := 60.0 * 60.0
 var lighting_update_threshold := 0.1
 var weather: int
 
@@ -61,12 +61,15 @@ func _update_lighting() -> void:
 	world_env.environment.background_sky.sun_longitude = longitude
 
 	var wdata := _weathers[weather] as Weather
+
 	var topcol := wdata.sky_top.interpolate(time / 3600.0)
 	var bottomcol := wdata.sky_bottom.interpolate(time / 3600.0)
 	world_env.environment.background_sky.sky_top_color = topcol
 	world_env.environment.background_sky.sky_horizon_color = topcol.linear_interpolate(bottomcol, 0.5)
 	world_env.environment.background_sky.ground_horizon_color = bottomcol.linear_interpolate(topcol, 0.5)
 	world_env.environment.background_sky.ground_bottom_color = bottomcol
+
+	world_env.environment.ambient_light_color = wdata.amb.interpolate(time / 3600.0)
 
 func _load_timecyc() -> void:
 	print("Load timecyc")
@@ -77,32 +80,25 @@ func _load_timecyc() -> void:
 	for wi in 4:
 		var wdata := Weather.new()
 		for li in 24:
-			li = li as float
 			var line := file.get_line() as String
 			while line.begins_with("//"):
 				line = file.get_line() as String
 			var parts := line.replacen("\t", " ").rsplit(" ", false)
 
 			wdata.amb.add_point(li, Color(float(parts[0]) / 255, float(parts[1]) / 255, float(parts[2]) / 255))
-			wdata.dir.add_point(li, Color(float(parts[3]) / 255, float(parts[4]) / 255, float(parts[5]) / 255))
+
 			wdata.sky_top.add_point(li, Color(float(parts[6]) / 255, float(parts[7]) / 255, float(parts[8]) / 255))
 			wdata.sky_bottom.add_point(li, Color(float(parts[9]) / 255, float(parts[10]) / 255, float(parts[11]) / 255))
-			wdata.suncore.add_point(li, Color(float(parts[12]) / 255, float(parts[13]) / 255, float(parts[14]) / 255))
-			wdata.suncorona.add_point(li, Color(float(parts[15]) / 255, float(parts[16]) / 255, float(parts[17]) / 255))
+		# Godot devs, please remove the two default points from gradients.
+		# They are a huge pain in the ass to deal with.
+		wdata.amb.remove_point(0)
+		wdata.amb.remove_point(0)
 
-			wdata.sunsz.add_point(Vector2(li, float(parts[18])))
-			wdata.sprsz.add_point(Vector2(li, float(parts[19])))
-			wdata.sprbght.add_point(Vector2(li, float(parts[20])))
-			wdata.shdw.add_point(Vector2(li, float(parts[21])))
-			wdata.lightshd.add_point(Vector2(li, float(parts[22])))
-			wdata.treeshd.add_point(Vector2(li, float(parts[23])))
-			wdata.farclp.add_point(Vector2(li, float(parts[24])))
-			wdata.fogst.add_point(Vector2(li, float(parts[25])))
-			wdata.lightonground.add_point(Vector2(li, float(parts[26])))
+		wdata.sky_top.remove_point(0)
+		wdata.sky_top.remove_point(0)
+		wdata.sky_bottom.remove_point(0)
+		wdata.sky_bottom.remove_point(0)
 
-			wdata.lowcloudsrgb.add_point(li, Color(float(parts[27]) / 255, float(parts[28]) / 255, float(parts[29]) / 255))
-			wdata.topcloudrgb.add_point(li, Color(float(parts[30]) / 255, float(parts[31]) / 255, float(parts[32]) / 255))
-			wdata.bottomcloudrgb.add_point(li, Color(float(parts[33]) / 255, float(parts[34]) / 255, float(parts[35]) / 255))
 		_weathers.append(wdata)
 	print("Loaded timecyc")
 
@@ -113,6 +109,7 @@ func start_game() -> void:
 	world_env.environment = load(ProjectSettings["rendering/environment/default_environment"])
 	world_env.environment.background_mode = Environment.BG_SKY
 	world_env.environment.background_sky = ProceduralSky.new()
+	world_env.environment.ambient_light_sky_contribution = 0.0
 	add_child(world_env)
 
 	sun = DirectionalLight.new()
