@@ -10,7 +10,7 @@ var world_env: WorldEnvironment
 var sun: DirectionalLight
 var time: float
 var time_speed := 60.0
-var lighting_update_threshold := 1.0
+var lighting_update_threshold := 0.1
 
 var _last_lighting_update := 0.0
 
@@ -33,11 +33,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	match state:
 		GameState.IN_GAME:
-			# print("The time is %d:%d:%d" % [
-			# 	(time / 60 / 60) as int % 24,
-			# 	(time / 60) as int % 60,
-			# 	(time) as int % 60,
-			# ])
+			print("The time is %d:%d:%d" % [
+				(time / 60 / 60) as int % 24,
+				(time / 60) as int % 60,
+				(time) as int % 60,
+			])
 			time += delta * time_speed
 			if time > 86400.0:
 				time = 0.0
