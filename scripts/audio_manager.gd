@@ -21,6 +21,10 @@ func _ready() -> void:
 		meta.sample_rate = file.get_32()
 		meta.loop_start = file.get_32()
 		meta.loop_end = file.get_32()
+
+		# Sign loop start and end.
+		meta.loop_start = (meta.loop_start + (1 << 31)) % (1 << 32) - (1 << 31)
+		meta.loop_end = (meta.loop_end + (1 << 31)) % (1 << 32) - (1 << 31)
 		_sfx_lookup.append(meta)
 
 	print("Cached %d SFX entries" % _sfx_lookup.size())
@@ -42,16 +46,15 @@ func load_sfx(id: int) -> AudioStreamSample:
 	file.close()
 
 	stream.format = AudioStreamSample.FORMAT_16_BITS
-	# Looping is broken as heck, I don't know why.
-	# stream.loop_begin = meta.loop_start
-	# stream.loop_end = (
-	# 	meta.size if meta.loop_end == -1
-	# 	else meta.loop_end
-	# )
-	# stream.loop_mode = (
-	# 	AudioStreamSample.LOOP_DISABLED if meta.loop_end == -1
-	# 	else AudioStreamSample.LOOP_FORWARD
-	# )
+	stream.loop_begin = meta.loop_start / 2
+	stream.loop_end = (
+		meta.size if meta.loop_end == -1
+		else meta.loop_end
+	) / 2
+	stream.loop_mode = (
+		AudioStreamSample.LOOP_DISABLED if meta.loop_end < 1
+		else AudioStreamSample.LOOP_FORWARD
+	)
 	stream.mix_rate = meta.sample_rate
 
 	return stream
