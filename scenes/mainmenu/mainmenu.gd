@@ -10,4 +10,5 @@ func _on_Button_pressed():
 
 	filediag.popup_centered_minsize(Vector2(600, 500))
 	var path = yield(filediag, "file_selected")
+	print("Load scene: " + path)
 	get_tree().change_scene(path)
