@@ -64,7 +64,7 @@ func start_game() -> void:
 	sun.shadow_enabled = true
 	add_child(sun)
 
-	time = 7 * 60 * 60
+	time = 7.75 * 60 * 60
 	state = GameState.IN_GAME
 
 
