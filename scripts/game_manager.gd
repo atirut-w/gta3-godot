@@ -4,6 +4,12 @@ extends Node
 signal initialized()
 
 var game_path := ""
+var state: int
+
+enum GameState {
+	MAIN_MENU,
+	GAME,
+}
 
 
 func _ready() -> void:
@@ -12,6 +18,7 @@ func _ready() -> void:
 	print("Load main menu")
 	var err := get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")
 	assert(err == OK)
+	state = GameState.MAIN_MENU
 
 
 # Promp the user for the game path
