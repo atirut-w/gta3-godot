@@ -19,12 +19,8 @@ func _ready() -> void:
 		meta.offset = file.get_32()
 		meta.size = file.get_32()
 		meta.sample_rate = file.get_32()
-		meta.loop_start = file.get_32()
-		meta.loop_end = file.get_32()
-
-		# Sign loop start and end.
-		meta.loop_start = (meta.loop_start + (1 << 31)) % (1 << 32) - (1 << 31)
-		meta.loop_end = (meta.loop_end + (1 << 31)) % (1 << 32) - (1 << 31)
+		meta.loop_start = (file.get_32() + (1 << 31)) % (1 << 32) - (1 << 31)
+		meta.loop_end = (file.get_32() + (1 << 31)) % (1 << 32) - (1 << 31)
 		_sfx_lookup.append(meta)
 
 	print("Cached %d SFX entries" % _sfx_lookup.size())
