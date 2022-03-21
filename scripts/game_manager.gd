@@ -70,6 +70,11 @@ func _update_lighting() -> void:
 	world_env.environment.background_sky.ground_bottom_color = bottomcol
 	world_env.environment.ambient_light_color = wdata.amb.interpolate(time / 3600.0)
 
+	world_env.environment.fog_color = topcol.linear_interpolate(bottomcol, 0.5)
+	world_env.environment.fog_depth_begin = wdata.fogst.interpolate_baked(time / 3600.0)
+	get_viewport().get_camera().far = wdata.farclp.interpolate_baked(time / 3600.0)
+
+
 func _load_timecyc() -> void:
 	print("Load timecyc")
 	var file = File.new()
@@ -87,6 +92,9 @@ func _load_timecyc() -> void:
 			wdata.amb.add_point(li, Color(float(parts[0]) / 255, float(parts[1]) / 255, float(parts[2]) / 255))
 			wdata.sky_top.add_point(li, Color(float(parts[6]) / 255, float(parts[7]) / 255, float(parts[8]) / 255))
 			wdata.sky_bottom.add_point(li, Color(float(parts[9]) / 255, float(parts[10]) / 255, float(parts[11]) / 255))
+
+			wdata.farclp.add_point(Vector2(li, float(parts[24])))
+			wdata.fogst.add_point(Vector2(li, float(parts[25])))
 		# Godot devs, please remove the two default points from gradients.
 		# They are a huge pain in the ass to deal with.
 		wdata.amb.remove_point(0)
@@ -108,6 +116,8 @@ func start_game() -> void:
 	world_env.environment.background_mode = Environment.BG_SKY
 	world_env.environment.background_sky = ProceduralSky.new()
 	world_env.environment.ambient_light_sky_contribution = 0.0
+	world_env.environment.fog_enabled = true
+	world_env.environment.fog_depth_end = 0.0
 	add_child(world_env)
 
 	sun = DirectionalLight.new()
