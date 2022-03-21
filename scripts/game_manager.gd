@@ -89,3 +89,24 @@ func choose_game_path() -> void:
 	filediag.queue_free()
 
 	print("Game path: " + game_path)
+
+
+class Weather:
+	var amb: Gradient
+	var dir: Gradient
+	var sky_top: Gradient
+	var sky_bottom: Gradient
+	var suncore: Gradient
+	var suncorona: Gradient
+	var sunsz: Curve
+	var sprsz: Curve
+	var sprbght: Curve
+	var shdw: Curve
+	var lightshd: Curve
+	var treeshd: Curve
+	var farclp: Curve
+	var fogst: Curve
+	var lightonground: Curve
+	var lowcloudsrgb: Gradient
+	var topcloudrgb: Gradient
+	var bottomcloudrgb: Gradient
