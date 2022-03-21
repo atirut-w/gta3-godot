@@ -9,7 +9,7 @@ var state: int
 enum GameState {
 	STARTUP,
 	MAIN_MENU,
-	GAME,
+	IN_GAME,
 }
 
 
