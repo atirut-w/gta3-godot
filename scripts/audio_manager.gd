@@ -41,15 +41,16 @@ func load_sfx(id: int) -> AudioStreamSample:
 	file.close()
 
 	stream.format = AudioStreamSample.FORMAT_16_BITS
-	stream.loop_begin = meta.loop_start
-	stream.loop_end = (
-		meta.loop_end if meta.loop_end != -1
-		else meta.loop_end
-	)
-	stream.loop_mode = (
-		AudioStreamSample.LOOP_FORWARD if meta.loop_end != 0
-		else AudioStreamSample.LOOP_DISABLED
-	)
+	# Looping is broken as heck, I don't know why.
+	# stream.loop_begin = meta.loop_start
+	# stream.loop_end = (
+	# 	meta.size if meta.loop_end == -1
+	# 	else meta.loop_end
+	# )
+	# stream.loop_mode = (
+	# 	AudioStreamSample.LOOP_DISABLED if meta.loop_end == -1
+	# 	else AudioStreamSample.LOOP_FORWARD
+	# )
 	stream.mix_rate = meta.sample_rate
 
 	return stream
