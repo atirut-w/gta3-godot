@@ -67,6 +67,7 @@ func start_game() -> void:
 
 	time = 7.75 * 60 * 60
 	state = GameState.IN_GAME
+	_update_lighting()
 
 
 # Promp the user for the game path
