@@ -17,9 +17,135 @@ transform = Transform( 0.387113, -0.074363, -0.919029, 0, 0.996742, -0.0806512, 
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="SpinBox" type="SpinBox" parent="CanvasLayer"]
-margin_right = 74.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 54.0
+margin_bottom = 19.0
+text = "Weather"
+
+[node name="SpinBox" type="SpinBox" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+margin_left = 58.0
+margin_right = 132.0
 margin_bottom = 24.0
 max_value = 3.0
 
-[connection signal="value_changed" from="CanvasLayer/SpinBox" to="." method="_on_SpinBox_value_changed"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 48.0
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_top = 3.0
+margin_right = 54.0
+margin_bottom = 17.0
+text = "Time +/-"
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 58.0
+margin_right = 123.0
+margin_bottom = 20.0
+text = "-2 hours"
+
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 127.0
+margin_right = 192.0
+margin_bottom = 20.0
+text = "-1 hours"
+
+[node name="Button3" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 196.0
+margin_right = 286.0
+margin_bottom = 20.0
+text = "-30 minutes"
+
+[node name="Button6" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 290.0
+margin_right = 383.0
+margin_bottom = 20.0
+text = "+30 minutes"
+
+[node name="Button5" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 387.0
+margin_right = 455.0
+margin_bottom = 20.0
+text = "+1 hours"
+
+[node name="Button4" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+margin_left = 459.0
+margin_right = 527.0
+margin_bottom = 20.0
+text = "+2 hours"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+margin_top = 52.0
+margin_right = 1024.0
+margin_bottom = 72.0
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer3"]
+margin_top = 3.0
+margin_right = 56.0
+margin_bottom = 17.0
+text = "Time set"
+
+[node name="midnight" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer3"]
+margin_left = 60.0
+margin_right = 108.0
+margin_bottom = 20.0
+text = "00:00"
+
+[node name="morning" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer3"]
+margin_left = 112.0
+margin_right = 160.0
+margin_bottom = 20.0
+text = "06:00"
+
+[node name="midday" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer3"]
+margin_left = 164.0
+margin_right = 212.0
+margin_bottom = 20.0
+text = "12:00"
+
+[node name="evening" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer3"]
+margin_left = 216.0
+margin_right = 264.0
+margin_bottom = 20.0
+text = "18:00"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 1024.0
+margin_bottom = 100.0
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer4"]
+margin_top = 5.0
+margin_right = 81.0
+margin_bottom = 19.0
+text = "Current time"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer4"]
+margin_left = 85.0
+margin_right = 143.0
+margin_bottom = 24.0
+text = "00:00"
+align = 1
+editable = false
+
+[connection signal="value_changed" from="CanvasLayer/VBoxContainer/HBoxContainer/SpinBox" to="." method="_on_SpinBox_value_changed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button6" to="." method="_on_Button6_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button5" to="." method="_on_Button5_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer2/Button4" to="." method="_on_Button4_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer3/midnight" to="." method="_on_midnight_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer3/morning" to="." method="_on_morning_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer3/midday" to="." method="_on_midday_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer3/evening" to="." method="_on_evening_pressed"]
