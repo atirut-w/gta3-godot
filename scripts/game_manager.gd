@@ -44,7 +44,9 @@ func _physics_process(delta: float) -> void:
 			# ])
 			time += delta * time_speed
 			if time > 86400.0:
-				time = 0.0
+				time = 0.0 + time - 86400.0
+			elif time < 0.0:
+				time = 86400.0 + time
 
 			_last_lighting_update += delta
 			if _last_lighting_update > lighting_update_threshold:
