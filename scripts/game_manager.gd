@@ -140,7 +140,7 @@ func start_game() -> void:
 	_sun_brightness.add_point(Vector2(17.5 / 24.0, 1.0))
 	_sun_brightness.add_point(Vector2(18.0 / 24.0, 0.0))
 
-	time = 7.75 * 60 * 60
+	time = 6.0 * 60 * 60
 	state = GameState.IN_GAME
 	_update_lighting()
 
