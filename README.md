@@ -1,4 +1,4 @@
 # GTA 3 in Godot Engine
-Still very WIP, don't expect anything.
+Pretty much [San Andreas Unity](https://github.com/GTA-ASM/SanAndreasUnity) but in Godot.
 
-I'll be very surprised if I manage to load models and textures.
+SFX loading is done. Time of day system is also done, but the weather system is not(time cycle loading is done).
