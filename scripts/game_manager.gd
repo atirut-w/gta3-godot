@@ -13,6 +13,7 @@ var time_speed := 60.0 * 60.0
 var lighting_update_threshold := 0.1
 var weather: int
 
+var _sun_brightness := preload("res://resources/sun_brightness.tres")
 var _last_lighting_update := 0.0
 var _weathers: Array
 
@@ -69,6 +70,7 @@ func _update_lighting() -> void:
 	world_env.environment.fog_sun_color = suncol
 	world_env.environment.fog_sun_amount = sun.light_energy
 	sun.light_color = suncol
+	sun.light_energy = _sun_brightness.interpolate_baked(time / 86400.0)
 	world_env.environment.background_sky.sky_top_color = topcol
 	world_env.environment.background_sky.sky_horizon_color = topcol.linear_interpolate(bottomcol, 0.5)
 	world_env.environment.background_sky.ground_horizon_color = bottomcol.linear_interpolate(topcol, 0.5)
