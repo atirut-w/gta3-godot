@@ -13,7 +13,7 @@ var time_speed := 60.0
 var lighting_update_threshold := 0.1
 var weather: int
 
-var _sun_brightness := preload("res://resources/sun_brightness.tres")
+var _sun_brightness: Curve
 var _last_lighting_update := 0.0
 var _weathers: Array
 
@@ -133,6 +133,12 @@ func start_game() -> void:
 	sun = DirectionalLight.new()
 	sun.shadow_enabled = true
 	add_child(sun)
+
+	_sun_brightness = Curve.new()
+	_sun_brightness.add_point(Vector2(6.0 / 24.0, 0.0))
+	_sun_brightness.add_point(Vector2(6.5 / 24.0, 1.0))
+	_sun_brightness.add_point(Vector2(17.5 / 24.0, 1.0))
+	_sun_brightness.add_point(Vector2(18.0 / 24.0, 0.0))
 
 	time = 7.75 * 60 * 60
 	state = GameState.IN_GAME
