@@ -9,7 +9,7 @@ var state: int
 var world_env: WorldEnvironment
 var sun: DirectionalLight
 var time: float
-var time_speed := 60.0 * 60.0
+var time_speed := 60.0
 var lighting_update_threshold := 0.1
 var weather: int
 
