@@ -11,6 +11,10 @@ var raw_body: PoolByteArray
 var _parent: KaitaiStruct
 var _root: RenderWareBinaryStream
 
+enum Sections {
+	TEXTURE_DICT = 22
+}
+
 
 func _init(io: KaitaiStream, parent: KaitaiStruct = null, root: RenderWareBinaryStream = null).(io) -> void:
 	_parent = parent
@@ -24,5 +28,7 @@ func _read() -> void:
 	library_id_stamp = _io.read_u4le()
 
 	match code:
+		Sections.TEXTURE_DICT:
+			raw_body = _io.read_bytes(size)
 		_:
 			body = _io.read_bytes(size)
