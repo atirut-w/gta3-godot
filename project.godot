@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "KaitaiStream",
+"language": "GDScript",
+"path": "res://scripts/renderware/kaitai_stream.gd"
+}, {
+"base": "Reference",
+"class": "KaitaiStruct",
+"language": "GDScript",
+"path": "res://scripts/renderware/kaitai_struct.gd"
+}, {
+"base": "KaitaiStruct",
+"class": "RenderWareBinaryStream",
+"language": "GDScript",
+"path": "res://scripts/renderware/renderware_binary_stream.gd"
+} ]
+_global_script_class_icons={
+"KaitaiStream": "",
+"KaitaiStruct": "",
+"RenderWareBinaryStream": ""
+}
+
 [application]
 
 config/name="GTA 3"
