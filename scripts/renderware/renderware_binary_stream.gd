@@ -5,6 +5,8 @@ extends KaitaiStruct
 var code: int
 var size: int
 var library_id_stamp: int
+var body
+var raw_body: PoolByteArray
 
 var _parent: KaitaiStruct
 var _root: RenderWareBinaryStream
@@ -20,3 +22,7 @@ func _read() -> void:
 	code = _io.read_u4le()
 	size = _io.read_u4le()
 	library_id_stamp = _io.read_u4le()
+
+	match code:
+		_:
+			body = _io.read_bytes(size)
