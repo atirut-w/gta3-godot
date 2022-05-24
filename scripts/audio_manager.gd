@@ -16,11 +16,3 @@ func _ready() -> void:
 func load_sfx(id: int) -> AudioStreamSample:
 	print("Loading SFX %d" % id)
 	return GTAAssetLoader.load_sfx(GameManager.game_path + "/audio/sfx.RAW", _sfx_lookup[id])
-
-
-class SFXMeta:
-	var offset: int
-	var size: int
-	var sample_rate: int
-	var loop_start: int
-	var loop_end: int
