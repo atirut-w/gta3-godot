@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "GTAAssetLoader",
+"language": "GDScript",
+"path": "res://scripts/gta_asset_loader.gd"
+} ]
+_global_script_class_icons={
+"GTAAssetLoader": ""
+}
+
 [application]
 
 config/name="GTA 3"

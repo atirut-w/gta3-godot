@@ -9,6 +9,8 @@ func _on_Button_pressed():
 	add_child(filediag)
 
 	filediag.popup_centered_minsize(Vector2(600, 500))
-	var path = yield(filediag, "file_selected")
+	var path := yield(filediag, "file_selected") as String
 	print("Load scene: " + path)
-	get_tree().change_scene(path)
+
+	var err := get_tree().change_scene(path)
+	assert(err == OK)
